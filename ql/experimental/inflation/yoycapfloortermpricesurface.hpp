@@ -188,6 +188,7 @@ namespace QuantLib {
         Rate atmYoYSwapRate(const Date& d, bool extrapolate = true) const override {
             return atmYoYSwapRateCurve_(timeFromReference(d),extrapolate);
         }
+
         Rate atmYoYRate(const Date& d,
                         const Period& obsLag = Period(-1, Days),
                         bool extrapolate = true) const override {
@@ -195,7 +196,7 @@ namespace QuantLib {
             // so ask for rate with observation lag
             Period p = (obsLag == Period(-1, Days)) ? observationLag() : obsLag;
             // Third parameter = force linear interpolation of yoy
-            return yoy_->yoyRate(d, p, false, extrapolate);
+            return yoy_->yoyRate(d - p, extrapolate);
         }
         //@}
 
